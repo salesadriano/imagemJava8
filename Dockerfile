@@ -14,6 +14,9 @@ RUN apt -y update && \
           cron \
           gnupg software-properties-common  \
           unzip \
+          openssh-client \
+          rsync \
+          locales \
           gettext \
           mutt \ 
           sshpass && \
@@ -23,7 +26,10 @@ RUN apt -y update && \
     apt -y remove libgcc-8-dev && \
     apt -y install adoptopenjdk-8-hotspot && \
     apt -y autoremove && \
-    ln -sf /usr/share/zoneinfo/America/Rio_Branco /etc/localtime && \
+    ln -sf /usr/share/zoneinfo/America/Rio_Branco /etc/localtime  && \
+    dpkg-reconfigure --frontend noninteractive tzdata && \
+    echo "pt_BR.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen && \
     mkdir -p ~/.mutt/cache/headers && \
     mkdir ~/.mutt/cache/bodies && \
     touch ~/.mutt/certificates && \
